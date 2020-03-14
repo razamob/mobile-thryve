@@ -14,4 +14,11 @@
     <string name="login_failed">"Login failed"</string>
     <string name="student_email">"student@sheridancollege.ca"</string>
     <string name="student_login">"First Last"</string>
+    <string name="registration">"Registration"</string>
+    <string name="c_register">"Complete Registration"</string>
+    <string name="first_name">"First Name"</string>
+    <string name="last_name">"Last Name"</string>
+    <string name="sheridan_email">"Sheridan E-mail Address"</string>
+    <string name="password">"Password"</string>
+    <string name="re_type_password">"Re-type Password"</string>
 </resources>
