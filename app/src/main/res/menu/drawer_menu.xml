@@ -25,10 +25,10 @@
             android:icon="@drawable/ic_record"
             android:title="Co-Curricular Record" />
 
-        <item
+        <!--<item
             android:id="@+id/nav_further"
             android:icon="@drawable/ic_further"
-            android:title="Further Education" />
+            android:title="Further Education" />-->
 
         <item
             android:id="@+id/nav_work"
