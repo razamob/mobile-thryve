@@ -10,9 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -21,10 +26,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer;
 
+    private Intent mainIntent;
+    private StudentAccount activeAccount;
+
+    private TextView accountHeaderName;
+    private TextView accountHeaderEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //receive login details
+        mainIntent = getIntent();
+        activeAccount = (StudentAccount) mainIntent.getSerializableExtra("user");
+
+        Toast.makeText(this, "I AM LOGGED IN: " + activeAccount.getEmailAddress(), Toast.LENGTH_LONG).show();
 
         //use the toolbar as the action bar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -35,6 +52,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //change account details on header
+        View header = navigationView.getHeaderView(0);
+        accountHeaderName = (TextView) header.findViewById(R.id.menu_header_name);
+        accountHeaderName.setText(activeAccount.getFirstName() + " " + activeAccount.getLastName());
+
+        accountHeaderEmail = (TextView) header.findViewById(R.id.menu_header_email);
+        accountHeaderEmail.setText(activeAccount.getEmailAddress());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -46,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+
     }
 
     @Override
@@ -68,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_centre:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CentreFragment()).commit();
+                break;
+            case R.id.nav_apt:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AppointmentFragment()).commit();
                 break;
             /*case R.id.nav_share:
                 Toast.makeText(this, "Share!", Toast.LENGTH_SHORT).show();
@@ -102,5 +130,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
     }
-
 }

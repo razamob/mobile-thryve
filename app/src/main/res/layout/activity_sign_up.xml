@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="createNewStudentAuth"
     tools:context=".SignUpActivity">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -17,77 +17,98 @@
             android:id="@+id/tv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/registration"
-            android:textAlignment="center"
-            android:textSize="50sp"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
+            android:layout_marginTop="60dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginVertical="60dp"/>
+            android:text="@string/registration"
+            android:textSize="50sp" />
+
+        <TextView
+            android:id="@+id/signup_alert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:textColor="#FF0000"
+            android:textSize="18sp"
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/reg_fname"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/first_name"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
-            android:padding="15dp"
-            android:inputType="textPersonName"
             android:background="@drawable/edittext_bg"
+            android:hint="@string/first_name"
+            android:inputType="textPersonName"
+            android:padding="15dp"
             android:textSize="15sp" />
 
         <EditText
             android:id="@+id/reg_lname"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/last_name"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
-            android:padding="15dp"
-            android:inputType="textPersonName"
             android:background="@drawable/edittext_bg"
+            android:hint="@string/last_name"
+            android:inputType="textPersonName"
+            android:padding="15dp"
             android:textSize="15sp" />
 
+        <EditText
+            android:id="@+id/reg_sheridanid"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittext_bg"
+            android:hint="@string/sheridan_number"
+            android:inputType="number"
+            android:padding="15dp"
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/reg_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/sheridan_email"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
-            android:padding="15dp"
-            android:inputType="textEmailAddress"
             android:background="@drawable/edittext_bg"
+            android:hint="@string/sheridan_email"
+            android:inputType="textEmailAddress"
+            android:padding="15dp"
             android:textSize="15sp" />
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/password"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
-            android:padding="15dp"
-            android:inputType="textPassword"
             android:background="@drawable/edittext_bg"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="15dp"
             android:textSize="15sp" />
 
         <EditText
             android:id="@+id/et_repassword"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/re_type_password"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:padding="15dp"
-            android:inputType="textPassword"
             android:background="@drawable/edittext_bg"
+            android:hint="@string/re_type_password"
+            android:inputType="textPassword"
+            android:padding="15dp"
             android:textSize="15sp" />
 
         <RelativeLayout
@@ -99,14 +120,13 @@
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_bg"
+                android:layout_centerInParent="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="30dp"
-                android:layout_centerInParent="true"
-                android:textColor="@android:color/white"
-                android:text="@string/c_register"/>
-
+                android:background="@drawable/button_bg"
+                android:text="@string/c_register"
+                android:textColor="@android:color/white" />
 
 
         </RelativeLayout>

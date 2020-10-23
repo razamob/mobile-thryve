@@ -40,11 +40,34 @@ public class HomeFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         CardView planCareerCardView = (CardView) view.findViewById(R.id.planyourcareer_cardView);
-
         planCareerCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CareerFragment nextFrag= new CareerFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        CardView planEducationCardView = (CardView) view.findViewById(R.id.planyoureducation_cardView);
+        planEducationCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EducationFragment nextFrag= new EducationFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        CardView coCurricularCardView = (CardView) view.findViewById(R.id.cocurricular_cardView);
+        coCurricularCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecordFragment nextFrag= new RecordFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, nextFrag, "findThisFragment")
                         .addToBackStack(null)

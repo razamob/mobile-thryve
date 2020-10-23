@@ -18,6 +18,7 @@
     <string name="c_register">"Complete Registration"</string>
     <string name="first_name">"First Name"</string>
     <string name="last_name">"Last Name"</string>
+    <string name="sheridan_number">"Sheridan ID Number"</string>
     <string name="sheridan_email">"Sheridan E-mail Address"</string>
     <string name="password">"Password"</string>
     <string name="re_type_password">"Re-type Password"</string>
@@ -40,4 +41,12 @@
     <string name="ccr_string5">"Current Sheridan students: Login to Access Sheridan, select the link “MySheridanCo-Curricular”"</string>
     <string name="ccr_string6">"Visit the public CCR website: https://mysheridanccr.sheridancollege.ca/home.htm"</string>
     <string name="ccr_string7">"For more information about Sheridan’s CCR, contact us directly at: mysheridanccr@sheridancollege.ca"</string>
+
+    <string name="educ_string1">"The Idea Generator helps you determine your career interest pattern and then suggests program which relate to your preference themes."</string>
+    <string name="educ_string2">"Many students decide to undertake further studies after their current program in order to pursue their interests and broaden career options. Sheridan has many pathways from diplomas to degrees and graduate certificates."</string>
+    <string name="educ_string3">"Information for students exploring degree-completion and Graduate Certificate options at colleges and universities around Ontario and elsewhere."</string>
+    <string name="educ_string4">"Career Counsellors are available to current students and grads to help you explore career options, set career goals, research labour market information, and plan further education."</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

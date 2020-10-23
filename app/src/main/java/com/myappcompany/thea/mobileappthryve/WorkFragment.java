@@ -11,10 +11,17 @@ import androidx.fragment.app.Fragment;
 
 public class WorkFragment extends Fragment {
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //remove - return super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_work, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_work, container, false);
+
+
+
+        return view;
     }
 }
