@@ -27,4 +27,16 @@ public class StudentAuth {
     public String getPassword() {
         return password;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setSheridanId(String sheridanId) {
+        this.sheridanId = sheridanId;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

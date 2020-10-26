@@ -39,6 +39,9 @@ public class AppointmentFragment extends Fragment {
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
+        aptResult = (TextView) view.findViewById(R.id.appointment_result);
+        //aptResult.setText("TESTING!!");
+
         getAppointments();
 
         return view;

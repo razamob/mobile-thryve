@@ -98,4 +98,8 @@ public class StudentAccount implements Serializable {
     public int getAuthId() {
         return authId;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -17,23 +17,36 @@ import retrofit2.http.Url;
 
 public interface JsonPlaceHolderApi {
 
-    @GET()
+    @GET
     Call<StudentContainer> getStudentAccounts(@Url String url);
 
-    @GET()
+    @GET
     Call<StudentAuthContainer> getStudentAuths(@Url String url);
-
-    @POST("student/get-studentaccount")
-    Call<StudentAccount> createStudentAccount(@Body StudentAccount newStudentAccount);
-
-    //@POST("studentauth/get-studentauth")
-    //Call<StudentAuthContainer> createStudentAuth(@Body StudentAuthContainer newStudentAuth);
 
     @GET
     Call<AppointmentContainer> getAppointments(@Url String url);
 
-    @POST("studentauth/get-studentauth")
-    Call<StudentAuthContainer> createStudentAuth(@Body StudentAuth newStudentAuth);
+    //@POST("student/get-studentaccount")
+    //Call<StudentAccount> createStudentAccount(@Body StudentAccount newStudentAccount);
+
+    //@POST("studentauth/get-studentauth")
+    //Call<StudentAuthContainer> createStudentAuth(@Body StudentAuthContainer newStudentAuth);
+
+    @FormUrlEncoded
+    @POST("student/get-studentaccount")
+    Call<StudentContainer> createStudentAccount(
+            @Field("fname") String firstName,
+            @Field("lname") String lastName,
+            @Field("email") String eMail,
+            @Field("student_number") String studentNumber,
+            @Field("program_year") int programYear,
+            @Field("als") boolean als,
+            @Field("coop") boolean coop,
+            @Field("international") boolean international,
+            @Field("program_id_id") int programId,
+            @Field("auth_id_id") int authId,
+            @Field("phone_number") String phoneNumber
+    );
 
     @FormUrlEncoded
     @POST("studentauth/get-studentauth")
@@ -41,8 +54,4 @@ public interface JsonPlaceHolderApi {
             @Field("sheridan_id") String sheridanId,
             @Field("password") String password
     );
-
-    @FormUrlEncoded
-    @POST("studentauth/get-studentauth")
-    Call<StudentAuthContainer> createStudentAuth(@FieldMap Map<String, String> fields);
 }
