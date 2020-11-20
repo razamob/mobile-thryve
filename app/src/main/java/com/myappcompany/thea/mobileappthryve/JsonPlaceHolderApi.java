@@ -39,12 +39,12 @@ public interface JsonPlaceHolderApi {
             @Field("lname") String lastName,
             @Field("email") String eMail,
             @Field("student_number") String studentNumber,
-            @Field("program_year") int programYear,
+            @Field("program_year") String programYear,
             @Field("als") boolean als,
             @Field("coop") boolean coop,
             @Field("international") boolean international,
-            @Field("program_id_id") int programId,
-            @Field("auth_id_id") int authId,
+            @Field("program_id") int programId,
+            @Field("auth_id") int authId,
             @Field("phone_number") String phoneNumber
     );
 

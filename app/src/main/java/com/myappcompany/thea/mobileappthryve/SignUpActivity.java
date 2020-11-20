@@ -62,9 +62,9 @@ public class SignUpActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validateSignUp();
+                //validateSignUp();
                 //createNewStudentAuth();
-                //createNewStudentAccount(44);
+                createNewStudentAccount(44);
             }
         });
     }
@@ -152,25 +152,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void createNewStudentAuth () {
-        String textId = registerSheridanId.getText().toString().replaceAll("\\s", "");
-        String textPassword = registerPassword.getText().toString().replaceAll("\\s", "");
-
-        Call<StudentAuthContainer> call = jsonPlaceHolderApi.createStudentAuth(textId,textPassword);
-
-        call.enqueue(new Callback<StudentAuthContainer>() {
-            @Override
-            public void onResponse(Call<StudentAuthContainer> call, Response<StudentAuthContainer> response) {
-                getStudentAuthId();
-            }
-
-            @Override
-            public void onFailure(Call<StudentAuthContainer> call, Throwable t) {
-                signupAlert.setText("Failure: " + t.getMessage());
-            }
-        });
-    }
-
     private void getStudentAuthId (){
         String textId = registerSheridanId.getText().toString().replaceAll("\\s", "");
 
@@ -206,13 +187,48 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    private void createNewStudentAuth () {
+        String textId = registerSheridanId.getText().toString().replaceAll("\\s", "");
+        String textPassword = registerPassword.getText().toString().replaceAll("\\s", "");
+
+        Call<StudentAuthContainer> call = jsonPlaceHolderApi.createStudentAuth(textId,textPassword);
+
+        call.enqueue(new Callback<StudentAuthContainer>() {
+            @Override
+            public void onResponse(Call<StudentAuthContainer> call, Response<StudentAuthContainer> response) {
+                if(!response.isSuccessful()) {
+                    signupAlert.setText("Signup Error: " +  response.code());
+                    return;
+                }
+                signupAlert.setText("SUCCESS!");
+                getStudentAuthId();
+            }
+
+            @Override
+            public void onFailure(Call<StudentAuthContainer> call, Throwable t) {
+                signupAlert.setText("Failure: " + t.getMessage());
+            }
+        });
+    }
+
     public void createNewStudentAccount(int a) {
         String textFname = registerFname.getText().toString().replaceAll("\\s", "");
         String textLname = registerLname.getText().toString().replaceAll("\\s", "");
         String textId = registerSheridanId.getText().toString().replaceAll("\\s", "");
         String textEmail = registerEmail.getText().toString().replaceAll("\\s", "");
 
-        Call<StudentContainer> call = jsonPlaceHolderApi.createStudentAccount(textFname, textLname, textEmail, textId, 1, false, false, false, 1, a, "647123456");
+        Call<StudentContainer> call = jsonPlaceHolderApi.createStudentAccount(
+                textFname,
+                textLname,
+                textEmail,
+                textId,
+                "4",
+                false,
+                false,
+                false,
+                12,
+                a,
+                "647123456");
 
         call.enqueue(new Callback<StudentContainer>() {
             @Override

@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                 StudentContainer containerx = response.body();
 
                 List<StudentAccount> studentAccounts = containerx.getMyStudentAccounts();
-
+                alertText.setText("");
                 for (StudentAccount studentAccount : studentAccounts) {
                     alertText.setText("Hello, " + studentAccount.getId() + ":" + studentAccount.getProgramId() + ":" + studentAccount.getAuthId());
                     if (studentAccount.getAuthId() == account) {
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
                         enter(studentAccount);
                         return;
                     } else
-                        alertText.setText("I AM NOT GETTING THE ACCOUNT");
+                        alertText.append("NO ACCOUNT: " + studentAccount.getAuthId() + " : " + account + "\n");
                 }
             }
 
