@@ -62,9 +62,9 @@ public class SignUpActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //validateSignUp();
+                validateSignUp();
                 //createNewStudentAuth();
-                createNewStudentAccount(44);
+                //createNewStudentAccount(44);
             }
         });
     }
@@ -84,8 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
                 || textPassword.equals("")
                 || textConfirmPassword.equals("")) {
             signupAlert.setText("Some fields missing");
-        }
-        else {
+        } else {
             signupAlert.setText("I AM JUST TESTING THIS");
             Call<StudentContainer> call = jsonPlaceHolderApi.getStudentAccounts("student/get-studentaccount");
 
@@ -104,7 +103,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     boolean a = false;
                     boolean b = false;
-                    for (StudentAccount studentAccount: studentAccounts) {
+                    for (StudentAccount studentAccount : studentAccounts) {
                         if (textId.equals(studentAccount.getStudentNumber())) {
                             a = true;
                             signupAlert.setText("Student number already in use!");
@@ -126,6 +125,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     createNewStudentAuth();
+                                    //getNewSchoolProgram();
                                 }
                             });
                             myConfirmAlert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -135,8 +135,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             });
                             myConfirmAlert.show();
-                        }
-                        else {
+                        } else {
                             signupAlert.setText("Passwords don't match!");
                             return;
                         }
@@ -152,7 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void getStudentAuthId (){
+    /*private void getStudentAuthId (){
         String textId = registerSheridanId.getText().toString().replaceAll("\\s", "");
 
         Call<StudentAuthContainer> call = jsonPlaceHolderApi.getStudentAuths("studentauth/get-studentauth");
@@ -185,23 +184,33 @@ public class SignUpActivity extends AppCompatActivity {
                 signupAlert.setText("Account Failure: " + t.getMessage());
             }
         });
-    }
+    }*/
 
-    private void createNewStudentAuth () {
+    private void createNewStudentAuth() {
         String textId = registerSheridanId.getText().toString().replaceAll("\\s", "");
         String textPassword = registerPassword.getText().toString().replaceAll("\\s", "");
 
-        Call<StudentAuthContainer> call = jsonPlaceHolderApi.createStudentAuth(textId,textPassword);
+        //final SchoolProgram n = m;
+
+        Call<StudentAuthContainer> call = jsonPlaceHolderApi.createStudentAuth(textId, textPassword);
 
         call.enqueue(new Callback<StudentAuthContainer>() {
             @Override
             public void onResponse(Call<StudentAuthContainer> call, Response<StudentAuthContainer> response) {
-                if(!response.isSuccessful()) {
-                    signupAlert.setText("Signup Error: " +  response.code());
+                if (!response.isSuccessful()) {
+                    signupAlert.setText("Signup Error 1: " + response.code());
                     return;
                 }
-                signupAlert.setText("SUCCESS!");
-                getStudentAuthId();
+                signupAlert.setText("SUCCESS 1!");
+                //getStudentAuthId();
+
+                StudentAuthContainer container = response.body();
+
+                List<StudentAuth> studentAuths = container.getMyStudentAuths();
+
+                for (StudentAuth studentAuth: studentAuths) {
+                    createNewStudentAccount(studentAuth.getId());
+                }
             }
 
             @Override
@@ -211,30 +220,20 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void createNewStudentAccount(int a) {
+    private void createNewStudentAccount(int a) {
         String textFname = registerFname.getText().toString().replaceAll("\\s", "");
         String textLname = registerLname.getText().toString().replaceAll("\\s", "");
         String textId = registerSheridanId.getText().toString().replaceAll("\\s", "");
         String textEmail = registerEmail.getText().toString().replaceAll("\\s", "");
 
         Call<StudentContainer> call = jsonPlaceHolderApi.createStudentAccount(
-                textFname,
-                textLname,
-                textEmail,
-                textId,
-                "4",
-                false,
-                false,
-                false,
-                12,
-                a,
-                "647123456");
+                a, 1, textFname, textLname, textEmail, textId, "4", false, false, false, "0");
 
         call.enqueue(new Callback<StudentContainer>() {
             @Override
             public void onResponse(Call<StudentContainer> call, Response<StudentContainer> response) {
-                if(!response.isSuccessful()) {
-                    signupAlert.setText("Signup Error: " +  response.code());
+                if (!response.isSuccessful()) {
+                    signupAlert.setText("Signup Error 2: " + response.code());
                     return;
                 }
                 signupAlert.setText("Account Registration Success!");
@@ -243,6 +242,34 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<StudentContainer> call, Throwable t) {
                 signupAlert.setText("Account Registration Failed: " + t.getMessage());
+            }
+        });
+    }
+
+    private void getNewSchoolProgram() {
+        Call<SchoolProgramContainer> call = jsonPlaceHolderApi.getAssignedSchoolProgram("program/find-schoolprogram/1");
+
+        call.enqueue(new Callback<SchoolProgramContainer>() {
+            @Override
+            public void onResponse(Call<SchoolProgramContainer> call, Response<SchoolProgramContainer> response) {
+                if (!response.isSuccessful()) {
+                    signupAlert.setText("Program Error: " + response.code());
+                    return;
+                }
+
+                SchoolProgramContainer container = response.body();
+
+                List<SchoolProgram> schoolPrograms = container.getMySchoolPrograms();
+
+                for (SchoolProgram schoolProgram: schoolPrograms) {
+                    //createNewStudentAuth(schoolProgram);
+                }
+                //createNewStudentAuth(schoolPrograms.get(0));
+            }
+
+            @Override
+            public void onFailure(Call<SchoolProgramContainer> call, Throwable t) {
+                signupAlert.setText("Incomplete!");
             }
         });
     }

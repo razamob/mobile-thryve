@@ -26,6 +26,9 @@ public interface JsonPlaceHolderApi {
     @GET
     Call<AppointmentContainer> getAppointments(@Url String url);
 
+    @GET
+    Call<SchoolProgramContainer> getAssignedSchoolProgram(@Url String url);
+
     //@POST("student/get-studentaccount")
     //Call<StudentAccount> createStudentAccount(@Body StudentAccount newStudentAccount);
 
@@ -33,8 +36,10 @@ public interface JsonPlaceHolderApi {
     //Call<StudentAuthContainer> createStudentAuth(@Body StudentAuthContainer newStudentAuth);
 
     @FormUrlEncoded
-    @POST("student/get-studentaccount")
+    @POST("student/insert-studentaccount/{auth_id}/{program_id}")
     Call<StudentContainer> createStudentAccount(
+            @Path("auth_id") int newAuth,
+            @Path("program_id") int newProg,
             @Field("fname") String firstName,
             @Field("lname") String lastName,
             @Field("email") String eMail,
@@ -43,8 +48,6 @@ public interface JsonPlaceHolderApi {
             @Field("als") boolean als,
             @Field("coop") boolean coop,
             @Field("international") boolean international,
-            @Field("program_id") int programId,
-            @Field("auth_id") int authId,
             @Field("phone_number") String phoneNumber
     );
 

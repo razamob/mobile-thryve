@@ -31,10 +31,10 @@ public class StudentAccount implements Serializable {
 
     private boolean international;
 
-    @SerializedName("program_id_id")
+    @SerializedName("program_id")
     private int programId;
 
-    @SerializedName("auth_id_id")
+    @SerializedName("auth_id")
     private int authId;
 
     public StudentAccount(String firstName, String lastName, String emailAddress, String studentNumber, String phoneNumber, int programYear, boolean als, boolean coop, boolean international, int programId, int authId) {
