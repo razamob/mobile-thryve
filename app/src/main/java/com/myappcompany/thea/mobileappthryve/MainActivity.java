@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mainIntent = getIntent();
         activeAccount = (StudentAccount) mainIntent.getSerializableExtra("user");
 
-        Toast.makeText(this, "I AM LOGGED IN: " + activeAccount.getEmailAddress(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "dLOGGED IN: " + activeAccount.getEmailAddress(), Toast.LENGTH_LONG).show();
 
         //use the toolbar as the action bar
         Toolbar toolbar = findViewById(R.id.toolbar);

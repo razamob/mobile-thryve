@@ -233,7 +233,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<StudentContainer> call, Response<StudentContainer> response) {
                 if (!response.isSuccessful()) {
-                    signupAlert.setText("Signup Error 2: " + response.code());
+                    signupAlert.setText("Signup Error 2: " + response.message());
                     return;
                 }
                 signupAlert.setText("Account Registration Success!");

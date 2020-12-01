@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
     public void enter(StudentAccount sa) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("user", (Serializable) sa);
-        alertText.setText("I GOT TO THIS POINT. YAY!");
+        //alertText.setText("I GOT TO THIS POINT. YAY!");
         startActivity(intent);
     }
 
