@@ -30,8 +30,11 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public void onBindViewHolder(@NonNull AppointmentHolder holder, int position) {
         Appointment currentAppointment = appointmentList.get(position);
         holder.textViewTitle.setText(currentAppointment.getTitle());
-        holder.textViewStart.setText(currentAppointment.getStartDate());
-        holder.textViewStatus.setText(Integer.toString(currentAppointment.getId()));
+
+        String formattedTime = (currentAppointment.getStartDate()).substring(0, 10) + " " + (currentAppointment.getStartDate()).substring(11, 16);
+        holder.textViewStart.setText(formattedTime);
+        //holder.textViewStatus.setText(Integer.toString(currentAppointment.getId()));
+        holder.textViewStatus.setText(currentAppointment.getStatus());
     }
 
     @Override
@@ -42,6 +45,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public void setAppointments(List<Appointment> appointments) {
         appointmentList = appointments;
         notifyDataSetChanged();
+    }
+
+    public Appointment getAppointmentAt(int position) {
+        return appointmentList.get(position);
     }
 
     class AppointmentHolder extends RecyclerView.ViewHolder {

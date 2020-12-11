@@ -27,7 +27,7 @@ public class AppointmentRepository {
             @Override
             public void onResponse(Call<AppointmentContainer> call, Response<AppointmentContainer> response) {
                 if(!response.isSuccessful()) {
-                    System.out.println("THIS IS AN ERROR AGAIN!");
+                    System.out.println("This is an error at getMutableLiveData! " + response.code());
                     return;
                 }
 
@@ -45,6 +45,70 @@ public class AppointmentRepository {
         });
         return mutableLiveData;
     }
+
+    public void insertNewAppointmentFromEC(int cc_id, int ec_id, int staf_id, int stud_id, Appointment apt) {
+        JsonPlaceHolderApi jsonPlaceHolderApi = RetrofitInstance.getApiService();
+
+        Call<AppointmentContainer> call = jsonPlaceHolderApi.createAppointment(cc_id, ec_id, staf_id, stud_id, apt);
+        call.enqueue(new Callback<AppointmentContainer>() {
+            @Override
+            public void onResponse(Call<AppointmentContainer> call, Response<AppointmentContainer> response) {
+                if(!response.isSuccessful()) {
+                    System.out.println("This is an error at insertNewAppointmentFromEC! " + response.code());
+                    return;
+                }
+
+                System.out.println("SUCCESSFUL INSERT HERE!");
+            }
+
+            @Override
+            public void onFailure(Call<AppointmentContainer> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void deleteAppointment(int aptId) {
+        JsonPlaceHolderApi jsonPlaceHolderApi = RetrofitInstance.getApiService();
+
+        Call<AppointmentContainer> call = jsonPlaceHolderApi.deleteAppointment(aptId);
+        call.enqueue(new Callback<AppointmentContainer>() {
+            @Override
+            public void onResponse(Call<AppointmentContainer> call, Response<AppointmentContainer> response) {
+                if(!response.isSuccessful()) {
+                    System.out.println("ERROR at DELETE! " + response.code());
+                    return;
+                }
+
+                System.out.println("SUCCESSFUL INSERT HERE!");
+            }
+
+            @Override
+            public void onFailure(Call<AppointmentContainer> call, Throwable t) {
+
+            }
+        });
+    }
+
+    /*public void insertNewAppointmentFromEC(int ec_form, int cc_form, int myStaff, int myStudent, Appointment newApppointment) {
+        JsonPlaceHolderApi jsonPlaceHolderApi = RetrofitInstance.getApiService();
+
+        Call<AppointmentContainer> call = jsonPlaceHolderApi.createAppointment(cc_form, ec_form, myStaff, myStudent, newApppointment);
+        call.enqueue(new Callback<AppointmentContainer>() {
+            @Override
+            public void onResponse(Call<AppointmentContainer> call, Response<AppointmentContainer> response) {
+                System.out.println("THIS IS AN ERROR FROM insertNewAppoinmentfromEC!");
+                return;
+            }
+
+            @Override
+            public void onFailure(Call<AppointmentContainer> call, Throwable t) {
+
+            }
+        });
+    }*/
+
+
 
     /*public MutableLiveData<List<Blog>> getMutableLiveData() {
 

@@ -346,18 +346,17 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="25dp"
             android:hint="Student Notes"
             android:inputType="textMultiLine" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/button_emp_confirm"
+            android:id="@+id/button_book_emp_appt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_green_light"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/ic_check"
             android:layout_gravity="bottom|end"
-            android:layout_margin="20dp" />
+            android:layout_margin="32dp" />
 
     </LinearLayout>
 </ScrollView>

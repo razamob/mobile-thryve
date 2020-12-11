@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (loginText.getText().toString().equals(studentAuth.getSheridanId())) {
                         loginCheck = true;
                         if (passwordText.getText().toString().equals(studentAuth.getPassword())) {
-                            alertText.setText("The auth id is " + studentAuth.getId() + ".");
+                            //alertText.setText("The auth id is " + studentAuth.getId() + ".");
                             getAccount(studentAuth.getId());
                         } else {
                             loginText.setText("");

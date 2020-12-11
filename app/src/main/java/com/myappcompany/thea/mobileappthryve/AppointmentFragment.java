@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -30,7 +31,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class AppointmentFragment extends Fragment {
+public class AppointmentFragment extends Fragment{
+    public static final String ARG_STUDENT = "argStudentAccount";
+    private StudentAccount currentUser;
+
+    private Appointment newEmpAppointment;
+    private EmploymentConsultantForm newEmpForm;
 
     private TextView aptResult;
     private Retrofit retrofit;
@@ -38,25 +44,25 @@ public class AppointmentFragment extends Fragment {
 
     private AppointmentViewModel appointmentViewModel;
 
+    public static AppointmentFragment newAppointmentFragmentInstance(StudentAccount myStudent) {
+        AppointmentFragment fragment = new AppointmentFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_STUDENT, myStudent);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //remove - return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_appointment, container, false);
 
-        /*retrofit = new Retrofit.Builder()
-                .baseUrl("http://web-app-thrv.us-east-2.elasticbeanstalk.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        if (getArguments() != null) {
+            currentUser = (StudentAccount) getArguments().get(ARG_STUDENT);
+        }
 
-        jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-
-        aptResult = (TextView) view.findViewById(R.id.appointment_result);
-        //aptResult.setText("TESTING!!");
-
-        getAppointments();*/
-
-        FloatingActionButton buttonBookEmpAppt = view.findViewById(R.id.button_book_emp_appt);
+        FloatingActionButton buttonBookEmpAppt = view.findViewById(R.id.button_add_new_appt);
         buttonBookEmpAppt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +113,7 @@ public class AppointmentFragment extends Fragment {
         appointmentViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()))
                 .get(AppointmentViewModel.class);
+        System.out.println("1viewmodel null? " + (appointmentViewModel == null));
 
         appointmentViewModel.getAllAppointments().observe(this, new Observer<List<Appointment>>() {
             @Override
@@ -116,40 +123,59 @@ public class AppointmentFragment extends Fragment {
                 //Toast.makeText(getActivity(),"Test Toast!", Toast.LENGTH_SHORT).show();
             }
         });
+        System.out.println("2viewmodel null? " + (appointmentViewModel == null));
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                appointmentViewModel.delete(adapter.getAppointmentAt(viewHolder.getAdapterPosition()));
+                getFragmentManager().beginTransaction().detach(AppointmentFragment.this).attach(AppointmentFragment.this).commit();
+            }
+        }).attachToRecyclerView(recyclerView);
+
+        //((MainActivity)getActivity(
         return view;
     }
 
-    /*private void getAppointments() {
-        Call<AppointmentContainer> call = jsonPlaceHolderApi.getAppointments("appointments/get-appointment");
+    public void insertNewEmpAppointment (Appointment a, EmploymentConsultantForm b, StudentAccount c) {
+        newEmpAppointment = a;
+        newEmpForm = b;
 
+        /*appointmentViewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()))
+                .get(AppointmentViewModel.class);*/
+
+        System.out.println("1viewmodel null? " + (appointmentViewModel == null));
+        System.out.println("viewmodel null? " + (appointmentViewModel == null));
+        System.out.println("a null? what? " + a.toString());
+        System.out.println("b null? " + b.getId());
+        System.out.println("c null? " + c.getId());
+        //appointmentViewModel.insert(1, b.getId(), 7, c.getId(), a);
+
+        JsonPlaceHolderApi jsonPlaceHolderApi = RetrofitInstance.getApiService();
+
+        Call<AppointmentContainer> call = jsonPlaceHolderApi.createAppointment(1, b.getId(), 7, c.getId(), a);
         call.enqueue(new Callback<AppointmentContainer>() {
             @Override
             public void onResponse(Call<AppointmentContainer> call, Response<AppointmentContainer> response) {
-                if (!response.isSuccessful()) {
-                    aptResult.setText("Code: " + response.code());
+                if(!response.isSuccessful()) {
+                    System.out.println("This is an error at insertNewAppointmentFromEC! " + response.code());
                     return;
                 }
 
-                AppointmentContainer container = response.body();
-
-                List<Appointment> appointments = container.getMyAppointments();
-
-                for(Appointment appointment: appointments) {
-                    String content = "";
-                    content += "id: " + appointment.getId() + "\n";
-                    content += "title: " + appointment.getTitle() + "\n";
-                    content += "start_date: " + appointment.getStartDate() + "\n";
-                    content += "end_date: " + appointment.getEndDate() + "\n";
-                    content += "description: " + appointment.getDescription() + "\n\n";
-
-                    aptResult.append(content);
-                }
+                System.out.println("SUCCESSFUL INSERT HERE!");
             }
 
             @Override
             public void onFailure(Call<AppointmentContainer> call, Throwable t) {
-                aptResult.setText("Failure: " + t.getMessage());
+
             }
         });
-    }*/
+    }
 }

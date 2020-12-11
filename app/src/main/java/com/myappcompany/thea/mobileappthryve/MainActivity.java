@@ -22,15 +22,19 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentChangeListener {
-
+public class MainActivity extends AppCompatActivity implements AddEmploymentAppointmentFragment.AddEmpFragmentListener, NavigationView.OnNavigationItemSelectedListener, FragmentChangeListener {
     private DrawerLayout drawer;
 
     private Intent mainIntent;
     private StudentAccount activeAccount;
+    private Appointment receivedAppointment;
+    private EmploymentConsultantForm receivedEmploymentForm;
 
     private TextView accountHeaderName;
     private TextView accountHeaderEmail;
+
+    private AddEmploymentAppointmentFragment empFragment;
+    private AppointmentFragment fragmentAppointment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mainIntent = getIntent();
         activeAccount = (StudentAccount) mainIntent.getSerializableExtra("user");
 
-        Toast.makeText(this, "dLOGGED IN: " + activeAccount.getEmailAddress(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "LOGGED IN: " + activeAccount.getEmailAddress(), Toast.LENGTH_LONG).show();
+
+        fragmentAppointment = new AppointmentFragment();
 
         //use the toolbar as the action bar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -91,11 +97,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_work:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WorkFragment()).commit();
                 break;
+            case R.id.nav_apt:
+                AppointmentFragment newAppointmentFragment = AppointmentFragment.newAppointmentFragmentInstance(activeAccount);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newAppointmentFragment).commit();
+                break;
             case R.id.nav_centre:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CentreFragment()).commit();
-                break;
-            case R.id.nav_apt:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AppointmentFragment()).commit();
                 break;
             /*case R.id.nav_share:
                 Toast.makeText(this, "Share!", Toast.LENGTH_SHORT).show();
@@ -129,5 +136,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+    public StudentAccount getActiveAccount() {
+        return activeAccount;
+    }
+
+    @Override
+    public void onNewEmpApptSent(Appointment newAppt, EmploymentConsultantForm newEmp) {
+
+
+        System.out.println("newAppt null? " + newAppt.getStartDate());
+        System.out.println("newEmp null? " + newEmp.isEcsJobsearch());
+        System.out.println("ActiveAccount null? " + activeAccount.getFirstName());
+        fragmentAppointment.insertNewEmpAppointment(newAppt, newEmp, activeAccount);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentAppointment).commit();
+        //Fragment fragment = new AddCareerAppointmentFragment();
+        //FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        //FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //fragmentTransaction.replace(R.id.fragment_container, fragment);
+        //fragmentTransaction.addToBackStack(null);
+        //fragmentTransaction.commit();
+
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragmentAppointment).commit();
     }
 }
